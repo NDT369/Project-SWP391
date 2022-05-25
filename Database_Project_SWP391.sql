@@ -1,56 +1,56 @@
 CREATE DATABASE PROJECT_SWP391_SUMMER2022
 CREATE TABLE [dbo].[Brand]
 (
-	[Brand_ID] int NOT NULL primary key,
+	[Brand_ID] int IDENTITY(1,1) NOT NULL primary key,
 	[Brand_Name] varchar(50),
 	[Brand_Status] bit 
 )
 
 CREATE TABLE [dbo].[Category]
 (
-	[Category_ID] int NOT NULL primary key,
+	[Category_ID] int IDENTITY(1,1) NOT NULL primary key,
 	[Category_Name] nvarchar(50),
 	[Category_Status] bit 
 )
 
 CREATE TABLE [dbo].[OperatingSystem]
 (
-	[OS_ID] int NOT NULL primary key,
+	[OS_ID] int IDENTITY(1,1) NOT NULL primary key,
 	[OS_Name] nvarchar(50),
 	[OS_Status] bit 
 )
 
 CREATE TABLE [dbo].[RAM]
 (
-	[RAM_ID] int NOT NULL primary key,
+	[RAM_ID] int IDENTITY(1,1) NOT NULL primary key,
 	[RAM_Name] nvarchar(50),
 	[RAM_Status] bit 
 )
 
 CREATE TABLE [dbo].[CPU]
 (
-	[CPU_ID] int NOT NULL primary key,
+	[CPU_ID] int IDENTITY(1,1) NOT NULL primary key,
 	[CPU_Name] nvarchar(50),
 	[CPU_Status] bit 
 )
 
 CREATE TABLE [dbo].[Card]
 (
-	[Card_ID] int NOT NULL primary key,
+	[Card_ID] int IDENTITY(1,1) NOT NULL primary key,
 	[Card_Name] nvarchar(50),
 	[Card_Status] bit 
 )
 
 CREATE TABLE [dbo].[Display]
 (
-	[Display_ID] int NOT NULL primary key,
+	[Display_ID] int IDENTITY(1,1) NOT NULL primary key,
 	[Display_Name] nvarchar(50),
 	[Disolay_Status] bit 
 )
 
 CREATE TABLE [dbo].[Capacity]
 (
-	[Capacity_ID] int NOT NULL primary key,
+	[Capacity_ID] int IDENTITY(1,1) NOT NULL primary key,
 	[Capacity_Name] nvarchar(50),
 	[Capacity_Status] bit 
 )
