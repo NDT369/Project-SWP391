@@ -44,7 +44,7 @@ public class AccountDAO extends DBContext {
 
     public void changePass(int accountID, String newPass) {
         String sql = "UPDATE [dbo].[Account]\n" +
-                    "      ,[Password] = ?\n" +
+                    "     SET [Password] = ?\n" +
                     " WHERE Account_ID = ?";
         try {
             ps = connection.prepareStatement(sql);
