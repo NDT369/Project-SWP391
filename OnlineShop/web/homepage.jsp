@@ -54,9 +54,10 @@
                         <c:if test="${sessionScope.account==null}">
                             <a href="login" class="login-panel"><i class="fa fa-user"></i>Login</a>
                         </c:if>
-                        <c:if test="${sessionScope.account!=null}">
-                           <a href="#" class="login-panel"><i class="fa fa-user"></i>Hello ${sessionScope.account.name}</a>
-                
+                        <c:if test="${sessionScope.account!=null}">       
+                                 <a class="login-panel"><i class="fa fa-user"></i>Hello ${sessionScope.account.name}</a> -
+                                 
+                         
                         </c:if> 
                         <div class="lan-selector">
                             <select class="language_drop" name="countries" id="countries" style="width:300px;">
