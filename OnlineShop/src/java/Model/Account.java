@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package Model;
 
 /**
  *
- * @author DUC THINH
+ * @author Pham Minh Giang
  */
 public class Account {
+
     private int accountID;
     private String username;
     private String password;
@@ -117,7 +118,8 @@ public class Account {
         this.role = role;
     }
 
-    
-    
-    
+    @Override
+    public String toString() {
+        return "Account{" + "accountID=" + accountID + ", username=" + username + ", password=" + password + ", name=" + name + ", gender=" + gender + ", email=" + email + ", phone=" + phone + ", address=" + address + ", status=" + status + ", role=" + role + '}';
+    }
 }

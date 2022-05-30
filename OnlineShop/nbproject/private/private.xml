@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/MSI/OneDrive/Desktop/SWP%20Project/Project-SWP391/OnlineShop/web/homepage.jsp</file>
-            <file>file:/C:/Users/MSI/OneDrive/Desktop/SWP%20Project/Project-SWP391/OnlineShop/src/java/dal/AccountDAO.java</file>
-            <file>file:/C:/Users/MSI/OneDrive/Desktop/SWP%20Project/Project-SWP391/OnlineShop/web/product.html</file>
-            <file>file:/C:/Users/MSI/OneDrive/Desktop/SWP%20Project/Project-SWP391/OnlineShop/src/java/model/Account.java</file>
+            <file>file:/C:/Project-SWP391/OnlineShop/src/java/dal/AccountDAO.java</file>
+            <file>file:/C:/Project-SWP391/OnlineShop/web/Admin/UserDetail.jsp</file>
+            <file>file:/C:/Project-SWP391/OnlineShop/src/java/AdminController/UserListServlet.java</file>
+            <file>file:/C:/Project-SWP391/OnlineShop/src/java/model/Account.java</file>
+            <file>file:/C:/Project-SWP391/OnlineShop/src/java/AdminController/UserSearchServlet.java</file>
+            <file>file:/C:/Project-SWP391/OnlineShop/web/Admin/UserList.jsp</file>
+            <file>file:/C:/Project-SWP391/OnlineShop/src/java/AdminController/UserDetailServlet.java</file>
         </group>
     </open-files>
 </project-private>

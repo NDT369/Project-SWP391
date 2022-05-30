@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package AdminController;
 
 import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +19,9 @@ import Model.Account;
 
 /**
  *
- * @author DUC THINH
+ * @author Pham Minh Giang
  */
-public class LoginServlet extends HttpServlet {
+public class UserListServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +40,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");            
+            out.println("<title>Servlet UserListServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UserListServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,7 +61,19 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+
+        AccountDAO a = new AccountDAO();
+        List<Account> list = a.getAll();
+
+        int gender = 0, role = 0, status = 0;
+        List<Integer> l = new ArrayList<>();
+        l.add(role);
+        l.add(gender);
+        l.add(status);
+        request.setAttribute("int", l);
+
+        request.setAttribute("UserList", list);
+        request.getRequestDispatcher("Admin/userlist.jsp").forward(request, response);
     }
 
     /**
@@ -73,24 +87,46 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        HttpSession session = request.getSession();
+        String gender_raw = request.getParameter("gender");
+        String role_raw = request.getParameter("role");
+        String status_raw = request.getParameter("status");
         
-        AccountDAO ad = new AccountDAO();
-        Account account = ad.checkAccount(username, password);
-        if(account==null){
-            request.setAttribute("mess", "Invalid Account");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
-        else{
-            HttpSession session = request.getSession();
-            session.setAttribute("account", account);
-            if(account.getRole().equalsIgnoreCase("admin")){
-                response.sendRedirect("admindashboard.jsp");
-            }else{
-            response.sendRedirect("homepage.jsp");
-            }
-        }
+        int gender = 0, role = 0, status = 0;
+
+        AccountDAO a = new AccountDAO();
+        List<Account> listall = a.getAll();
+//        try {
+//            gender = Integer.parseInt(gender_raw);
+//        } catch (Exception e) {
+//        }
+//        try {
+//            role = Integer.parseInt(role_raw);
+//        } catch (Exception e) {
+//        }
+//        try {
+//            status = Integer.parseInt(status_raw);
+//        } catch (Exception e) {
+//        }
+//        if (gender_raw != null) {
+//            List<Account> list = a.getByGender(gender);
+//            request.setAttribute("UserList", list);
+//            request.getRequestDispatcher("Admin/UserList.jsp").forward(request, response);
+//        }
+//        if (role_raw != null) {
+//            List<Account> list = a.getByRole(role);
+//            request.setAttribute("UserList", list);
+//            request.getRequestDispatcher("Admin/UserList.jsp").forward(request, response);
+//        }
+//        if (status_raw != null) {
+//            List<Account> list = a.getByStatus(status);
+//            request.setAttribute("UserList", list);
+//            request.getRequestDispatcher("Admin/UserList.jsp").forward(request, response);
+//        }
+
+        
+        request.setAttribute("UserList", listall);
+        request.getRequestDispatcher("Admin/userlist.jsp").forward(request, response);
     }
 
     /**

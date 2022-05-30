@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package AdminController;
 
 import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import Model.Account;
 
 /**
  *
- * @author DUC THINH
+ * @author Pham Minh Giang
  */
-public class LoginServlet extends HttpServlet {
+public class UserSearchServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +38,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");            
+            out.println("<title>Servlet UserSearchServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UserSearchServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,7 +59,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        String search = request.getParameter("search");
+        AccountDAO a = new AccountDAO();
+        List<Account> list = a.SearchUser(search);
+        request.setAttribute("UserList", list);
+        request.getRequestDispatcher("Admin/userlist.jsp").forward(request, response);
     }
 
     /**
@@ -73,24 +77,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        
-        AccountDAO ad = new AccountDAO();
-        Account account = ad.checkAccount(username, password);
-        if(account==null){
-            request.setAttribute("mess", "Invalid Account");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
-        else{
-            HttpSession session = request.getSession();
-            session.setAttribute("account", account);
-            if(account.getRole().equalsIgnoreCase("admin")){
-                response.sendRedirect("admindashboard.jsp");
-            }else{
-            response.sendRedirect("homepage.jsp");
-            }
-        }
+        String sort_raw = request.getParameter("sort");
+        AccountDAO a = new AccountDAO();
+        List<Account> list = a.getAllSort(sort_raw);
+        request.setAttribute("UserList", list);
+        request.getRequestDispatcher("Admin/userlist.jsp").forward(request, response);
     }
 
     /**
