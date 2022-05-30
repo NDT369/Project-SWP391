@@ -3,23 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package AdminController;
 
-import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Account;
 
 /**
  *
  * @author DUC THINH
  */
-public class LoginServlet extends HttpServlet {
+public class AdminDashBoardServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +35,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");            
+            out.println("<title>Servlet AdminDashBoardServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminDashBoardServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,7 +56,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        request.getRequestDispatcher("Admin/admindashboard.jsp").forward(request, response);
     }
 
     /**
@@ -73,28 +70,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        AccountDAO ad = new AccountDAO();
-        Account account = ad.checkAccount(username, password);
-        if (account == null) {
-            request.setAttribute("mess", "Invalid Account");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
-            HttpSession session = request.getSession();
-            session.setAttribute("account", account);
-            if (account.getRole().equalsIgnoreCase("admin")) {
-                response.sendRedirect("admindashboard");
-            } else if (account.getRole().equalsIgnoreCase("saler")) {
-                response.sendRedirect("saledashboard");
-            } else if (account.getRole().equalsIgnoreCase("marketer")) {
-                response.sendRedirect("marketingdashboard");
-            } else {
-                response.sendRedirect("homepage.jsp");
-            }
-        }
-
+        processRequest(request, response);
     }
 
     /**

@@ -107,22 +107,56 @@ public class AuthorizationFilter implements Filter {
         }
         
         doBeforeProcessing(request, response);
-                HttpServletRequest httpRequest = (HttpServletRequest)request;
-        HttpServletResponse httpResponse = (HttpServletResponse)response;
+      HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
         String url = httpRequest.getServletPath();
-        if(url.equals("/admindashboard.jsp")){
-            HttpSession session = httpRequest.getSession();
-            Account a = (Account)session.getAttribute("account");
-            if(a==null){
-                httpResponse.sendRedirect("login");
-            }else{
-                if(a.getRole().equalsIgnoreCase("admin")){
-                    chain.doFilter(request, response);
-                }else{
-                httpResponse.sendRedirect("login");
+        HttpSession session = httpRequest.getSession();
+        Account a = (Account) session.getAttribute("account");
+        switch (url) {
+            case "/admindashboard": 
+            {
+                if (a == null) {
+                    httpResponse.sendRedirect("login");
+                } else {
+                    if (a.getRole().equalsIgnoreCase("admin")) {
+                        chain.doFilter(request, response);
+                    } else {
+                        httpResponse.sendRedirect("login");
+                    }
                 }
-            }      
+                break;
+            }
+            
+            case "/saledashboard":
+            {
+                if (a == null) {
+                    httpResponse.sendRedirect("login");
+                } else {
+                    if (a.getRole().equalsIgnoreCase("saler")) {
+                        chain.doFilter(request, response);
+                    } else {
+                        httpResponse.sendRedirect("login");
+                    }
+                }
+                break;
+            }
+            
+            case "/marketingdashboard":
+            {
+                if (a == null) {
+                    httpResponse.sendRedirect("login");
+                } else {
+                    if (a.getRole().equalsIgnoreCase("marketer")) {
+                        chain.doFilter(request, response);
+                    } else {
+                        httpResponse.sendRedirect("login");
+                    }
+                }
+                break;
+            }
+   
         }
+
         
         Throwable problem = null;
         try {

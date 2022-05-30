@@ -28,6 +28,18 @@
         <servlet-name>UserSearchServlet</servlet-name>
         <servlet-class>AdminController.UserSearchServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminDashBoardServlet</servlet-name>
+        <servlet-class>AdminController.AdminDashBoardServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MarketingDashBoardServlet</servlet-name>
+        <servlet-class>MarketingController.MarketingDashBoardServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SaleDashBoardServlet</servlet-name>
+        <servlet-class>SaleController.SaleDashBoardServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -47,6 +59,18 @@
     <servlet-mapping>
         <servlet-name>UserSearchServlet</servlet-name>
         <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminDashBoardServlet</servlet-name>
+        <url-pattern>/admindashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MarketingDashBoardServlet</servlet-name>
+        <url-pattern>/marketingdashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaleDashBoardServlet</servlet-name>
+        <url-pattern>/saledashboard</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
