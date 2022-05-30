@@ -38,7 +38,7 @@ public class ChangePassServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ChangePassServlet</title>");            
+            out.println("<title>Servlet ChangePassServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ChangePassServlet at " + request.getContextPath() + "</h1>");
@@ -60,7 +60,7 @@ public class ChangePassServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
     }
 
     /**
@@ -78,11 +78,28 @@ public class ChangePassServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("account");
         String oldPass = request.getParameter("oldPass");
-        String newPass = request.getParameter("newPass");
-        if(oldPass.equals(a.getPassword())){
-            dao.changePass(a.getAccountID() ,newPass);
+        String newPass1 = request.getParameter("newPass1");
+        String newPass2 = request.getParameter("newPass2");
+        if (oldPass.equals(a.getPassword())) {
+            if (newPass1.equals(newPass2)) {
+                dao.changePass(a.getUsername(), newPass1);
+
+                request.setAttribute("changeSuccess", "Change password successfully");
+                request.setAttribute("pageInclude", "");
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            } else {
+                request.setAttribute("wrongNewPass", "re-enter new password is not match");
+                request.setAttribute("pageInclude", "");
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+
+        } else {
+            request.setAttribute("wrongOldPass", "Old password is wrong!!");
+            request.setAttribute("pageInclude", "");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+
         }
-        
+
     }
 
     /**
