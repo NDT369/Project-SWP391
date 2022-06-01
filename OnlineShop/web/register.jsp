@@ -1,14 +1,15 @@
 <%-- 
-    Document   : login
-    Created on : May 27, 2022, 1:36:32 PM
+    Document   : register
+    Created on : May 31, 2022, 8:27:42 PM
     Author     : DUC THINH
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
-   <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,10 +29,23 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-
+    <style>
+        #select{
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        #male{
+            margin-left: 20px;
+        }
+        #female{
+            margin-left: 20px;
+        }
+        
+    </style>
+    
     </head>
     <body>
-         <!-- Page Preloder -->
+        <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
     </div>
@@ -74,12 +88,12 @@
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
                         <div class="logo">
-                            <a href="homepage.jsp">
+                            <a href="./index.html">
                                 <img src="img/logo.png" alt="">
                             </a>
-                        </div>
+                        </div>    
                     </div>
-                    <div class="col-lg-7 col-lg-7">
+                    <div class="col-lg-7 col-md-7">
                         <div class="advanced-search">
                             <button type="button" class="category-btn">All Categories</button>
                             <form action="#" class="input-group">
@@ -88,58 +102,58 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-3 text-right col-lg-3">
+                    <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
                             <li class="heart-icon"><a href="#">
-                                    <i class="icon_heart_alt"></i>
-                                    <span>1</span>
-                                </a>
+                                <i class="icon_heart_alt"></i>
+                                <span>1</span>
+                            </a>
                             </li>
                             <li class="cart-icon"><a href="#">
-                                    <i class="icon_bag_alt"></i>
-                                    <span>3</span>
-                                </a>
-                                <div class="cart-hover">
-                                    <div class="select-items">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="si-pic"><img src="img/select-product-1.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="si-pic"><img src="img/select-product-2.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="select-total">
-                                        <span>total:</span>
-                                        <h5>$120.00</h5>
-                                    </div>
-                                    <div class="select-button">
-                                        <a href="#" class="primary-btn view-card">VIEW CARD</a>
-                                        <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
-                                    </div>
+                                <i class="icon_bag_alt"></i>
+                                <span>3</span>
+                            </a>
+                            <div class="cart-hover">
+                                <div class="select-items">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td class="si-pic"><img src="img/select-product-1.jpg" alt=""></td>
+                                                <td class="si-text">
+                                                    <div class="product-selected">
+                                                        <p>$60.00 x 1</p>
+                                                        <h6>Kabino Bedside Table</h6>
+                                                    </div>
+                                                </td>
+                                                <td class="si-close">
+                                                    <i class="ti-close"></i>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="si-pic"><img src="img/select-product-2.jpg" alt=""></td>
+                                                <td class="si-text">
+                                                    <div class="product-selected">
+                                                        <p>$60.00 x 1</p>
+                                                        <h6>Kabino Bedside Table</h6>
+                                                    </div>
+                                                </td>
+                                                <td class="si-close">
+                                                    <i class="ti-close"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </li>
+                                <div class="select-total">
+                                    <span>total:</span>
+                                    <h5>$120.00</h5>
+                                </div>
+                                <div class="select-button">
+                                    <a href="#" class="primary-btn view-card">VIEW CARD</a>
+                                    <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
+                                </div>
+                            </div>
+                        </li>
                             <li class="cart-price">$150.00</li>
                         </ul>
                     </div>
@@ -166,7 +180,7 @@
                 </div>
                 <nav class="nav-menu mobile-menu">
                     <ul>
-                        <li><a href="homepage.jsp">Home</a></li>
+                        <li><a href="./index.html">Home</a></li>
                         <li><a href="./shop.html">Shop</a></li>
                         <li><a href="#">Collection</a>
                             <ul class="dropdown">
@@ -202,7 +216,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="#"><i class="fa fa-home"></i> Home</a>
-                        <span>Login</span>
+                        <span>Register</span>
                     </div>
                 </div>
             </div>
@@ -215,31 +229,51 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
-                    <div class="login-form">
-                        <h2>Login</h2>
-                        <form action="login" method="post">
+                    <div class="register-form">
+                        <h2>Register</h2>
+                        <c:if test="${requestScope.mess!=null}">
+                        <h3 style="color: red">${requestScope.mess}</h3>
+                        </c:if>
+                        <form action="register" method="post">
                             <div class="group-input">
-                                <label for="username">Username or email address *</label>
-                                <input type="text" name="username" value="${param.username}">
+                                <label for="con-pass">Full Name *</label>
+                                <input type="text" name="fullname" id="con-pass" value="${param.fullname}" required>
+                             
+                            </div>
+                            <div id="select" style="font-size: 20px">
+                                <label for="con-pass">Gender *</label>
+                                <input type="radio" name="gender" checked id="male" value="male">Male
+                                <input type="radio" name="gender" id="female" value="female">Female
+                            </div>
+                            <div class="group-input">
+                                <label for="con-pass">Email *</label>
+                                <input type="email" name="email" id="con-pass" value="${param.email}" required>
+                            </div>
+                            <div class="group-input">
+                                <label for="con-pass">Phone *</label>
+                                <input type="text" name="phone" id="con-pass" value="${param.phone}" required>
+                            </div>
+                            <div class="group-input">
+                                <label for="con-pass">Address *</label>
+                                <input type="text" name="address"id="con-pass" value="${param.address}" required>
+                            </div>
+                            <div class="group-input">
+                                <label for="username">Username *</label>
+                                <input type="text" name="uname" id="username" required>
                             </div>
                             <div class="group-input">
                                 <label for="pass">Password *</label>
-                                <input type="password" name="password" value="${param.password}">
+                                <input type="password" name="pass" id="pass" required>
                             </div>
-                            <div class="group-input gi-check">
-                                <div class="gi-more">
-                                    <label for="save-pass">
-                                        Save Password
-                                        <input type="checkbox" id="save-pass">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <a href="#" class="forget-pass">Forget your Password</a>
-                                </div>
+                            <div class="group-input">
+                                <label for="con-pass">Confirm Password *</label>
+                                <input type="password" name="conpass" id="con-pass" value="${param.conpass}" required>
                             </div>
-                            <button type="submit" class="site-btn login-btn">Sign In</button>
+                      
+                            <button type="submit" class="site-btn register-btn">REGISTER</button>
                         </form>
                         <div class="switch-login">
-                            <a href="register" class="or-login">Or Create An Account</a>
+                            <a href="login" class="or-login">Or Login</a>
                         </div>
                     </div>
                 </div>
@@ -247,7 +281,7 @@
         </div>
     </div>
     <!-- Register Form Section End -->
-
+    
     <!-- Partner Logo Section Begin -->
     <div class="partner-logo">
         <div class="container">

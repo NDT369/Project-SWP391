@@ -112,46 +112,41 @@ public class AuthorizationFilter implements Filter {
         String url = httpRequest.getServletPath();
         HttpSession session = httpRequest.getSession();
         Account a = (Account) session.getAttribute("account");
-        switch (url) {
-            case "/admindashboard": {
-                if (a == null) {
-                    httpResponse.sendRedirect("login");
-                } else {
-                    if (a.getRole().equalsIgnoreCase("admin")) {
-                        chain.doFilter(request, response);
-                    } else {
-                        httpResponse.sendRedirect("login");
-                    }
-                }
-                break;
-            }
 
-            case "/saledashboard": {
-                if (a == null) {
-                    httpResponse.sendRedirect("login");
+        if (url.equals("/admindashboard") || url.equals("/userdetail") || url.equals("/userlist")) {
+            if (a == null) {
+                httpResponse.sendRedirect("login");
+            } else {
+                if (a.getRole().equalsIgnoreCase("admin")) {
+                    chain.doFilter(request, response);
                 } else {
-                    if (a.getRole().equalsIgnoreCase("saler")) {
-                        chain.doFilter(request, response);
-                    } else {
-                        httpResponse.sendRedirect("login");
-                    }
+                    httpResponse.sendRedirect("error.jsp");
                 }
-                break;
             }
+        }
 
-            case "/marketingdashboard": {
-                if (a == null) {
-                    httpResponse.sendRedirect("login");
+        if (url.equals("/saledashboard")) {
+            if (a == null) {
+                httpResponse.sendRedirect("login");
+            } else {
+                if (a.getRole().equalsIgnoreCase("saler")) {
+                    chain.doFilter(request, response);
                 } else {
-                    if (a.getRole().equalsIgnoreCase("marketer")) {
-                        chain.doFilter(request, response);
-                    } else {
-                        httpResponse.sendRedirect("login");
-                    }
+                    httpResponse.sendRedirect("error.jsp");
                 }
-                break;
             }
+        }
 
+        if (url.equals("/marketingdashboard")) {
+            if (a == null) {
+                httpResponse.sendRedirect("login");
+            } else {
+                if (a.getRole().equalsIgnoreCase("marketer")) {
+                    chain.doFilter(request, response);
+                } else {
+                    httpResponse.sendRedirect("error.jsp");
+                }
+            }
         }
 
         Throwable problem = null;

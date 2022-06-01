@@ -4,6 +4,7 @@
     Author     : DUC THINH
 --%>
 
+<%@page import="model.Account"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -193,8 +194,33 @@
                                     <li><a href="./shopping-cart.html">Shopping Cart</a></li>
                                     <li><a href="./check-out.html">Checkout</a></li>
                                     <li><a href="./faq.html">Faq</a></li>
-                                    <li><a href="./register.html">Register</a></li>
-                                    <li><a href="./login.html">Login</a></li>
+                                    <% 
+                                        Account a = (Account)session.getAttribute("account");
+                                        if(a!=null){
+                                        if(a.getRole().toLowerCase().equals("admin")){
+                                    %>
+                                    <li><a href="admindashboard">Admin DashBoard</a></li>
+                                    <%
+                                        }
+                                    %>
+                                   <%    
+                                        if(a.getRole().toLowerCase().equals("saler")){
+                                    %>
+                                    <li><a href="saledashboard">Sale DashBoard</a></li>
+                                    <%
+                                        }
+                                    %>
+                                    
+                                    <%    
+                                    if(a.getRole().toLowerCase().equals("marketer")){
+                                    %>
+                                    <li><a href="marketingdashboard">Marketing DashBoard</a></li>
+                                    <%
+                                        }
+                                    }
+                                    %>
+                                    <li><a href="logout">Logout</a></li>
+                                    
                                 </ul>
                             </li>
                         </ul>
@@ -208,11 +234,11 @@
         <!-- Hero Section Begin -->
         <section class="hero-section">
             <div class="hero-items owl-carousel">
-                <div class="single-hero-items set-bg" data-setbg="img/hero-1.jpg">
+                <div class="single-hero-items set-bg" data-setbg="img/slide1.jpg">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-5">
-                                <span>Bag,kids</span>
+                                <span>Laptop</span>
                                 <h1>Black friday</h1>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
                                     incididunt ut labore et dolore</p>
@@ -224,7 +250,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="single-hero-items set-bg" data-setbg="img/hero-2.jpg">
+                <div class="single-hero-items set-bg" data-setbg="img/slide3.jpg">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-5">

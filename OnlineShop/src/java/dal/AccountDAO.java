@@ -43,6 +43,59 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+    
+    public Account checkUserExist(String username){
+        String sql = "select * from Account where Username = ?";
+        try{
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Account account = new Account();
+                return account;
+            }
+        }catch(SQLException ex){
+            
+        }
+        return null;
+    }
+    
+       
+    public Account checkEmailExist(String email){
+        String sql = "select * from Account where Email = ?";
+        try{
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Account account = new Account();
+                return account;
+            }
+        }catch(SQLException ex){
+            
+        }
+        return null;
+    }
+    
+    public void registerNewAcc(Account a){
+        String sql = "insert into Account values(?,?,?,?,?,?,?,2,1)";
+        try{
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, a.getUsername());
+            ps.setString(2, a.getPassword());
+            ps.setString(3, a.getName());
+            ps.setBoolean(4, a.isGender());
+            ps.setString(5, a.getEmail());
+            ps.setString(6, a.getPhone());
+            ps.setString(7, a.getAddress());
+            ps.executeUpdate();
+        }catch(SQLException ex){   
+        }
+   
+    }
+    
+    
+    
 
     public void changePass(int accountID, String newPass) {
         String sql = "UPDATE [dbo].[Account]\n"

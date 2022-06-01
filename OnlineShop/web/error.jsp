@@ -1,6 +1,6 @@
 <%-- 
-    Document   : marketingdashboard
-    Created on : May 30, 2022, 11:54:52 PM
+    Document   : error
+    Created on : May 31, 2022, 11:47:59 PM
     Author     : DUC THINH
 --%>
 
@@ -12,9 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <a href="homepage.jsp">HomePage</a>
-        <h1>Hello Marketer!</h1>
-        <a href="logout">Logout</a>
-        
+        <h1 style="color: red">Ban khong co quyen truy cap. Vui long quay lai</h1>
     </body>
 </html>
