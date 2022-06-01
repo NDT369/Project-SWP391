@@ -3,7 +3,7 @@
     Created on : May 27, 2022, 1:43:11 PM
     Author     : DUC THINH
 --%>
-
+<!--
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -16,10 +16,10 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Fashi | Template</title>
 
-        <!-- Google Font -->
+         Google Font 
         <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-        <!-- Css Styles -->
+         Css Styles 
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
         <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
@@ -31,12 +31,12 @@
         <link rel="stylesheet" href="css/style.css" type="text/css">
     </head>
     <body>
-        <!-- Page Preloder -->
+         Page Preloder 
         <div id="preloder">
             <div class="loader"></div>
         </div>
 
-        <!-- Header Section Begin -->
+         Header Section Begin 
         <header class="header-section">
             <div class="header-top">
                 <div class="container">
@@ -54,10 +54,8 @@
                         <c:if test="${sessionScope.account==null}">
                             <a href="login" class="login-panel"><i class="fa fa-user"></i>Login</a>
                         </c:if>
-                        <c:if test="${sessionScope.account!=null}">       
-                                 <a class="login-panel"><i class="fa fa-user"></i>Hello ${sessionScope.account.name}</a> -
-                                 
-                         
+                        <c:if test="${sessionScope.account!=null}">    
+                            <a class="login-panel dropdown"><i class="fa fa-user"></i>Hello ${sessionScope.account.name}</a>
                         </c:if> 
                         <div class="lan-selector">
                             <select class="language_drop" name="countries" id="countries" style="width:300px;">
@@ -201,7 +199,7 @@
                     <div id="mobile-menu-wrap"></div>
                 </div>
             </div>
-        </header>
+        </header>-->
         <!-- Header End -->
 
         <!-- Hero Section Begin -->
@@ -739,7 +737,7 @@
         <!-- Partner Logo Section End -->
 
         <!-- Footer Section Begin -->
-        <footer class="footer-section">
+<!--        <footer class="footer-section">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3">
@@ -799,9 +797,9 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="copyright-text">
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                 Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. 
                                 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                 Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. 
                             </div>
                             <div class="payment-pic">
                                 <img src="img/payment-method.png" alt="">
@@ -811,9 +809,9 @@
                 </div>
             </div>
         </footer>
-        <!-- Footer Section End -->
+         Footer Section End 
 
-        <!-- Js Plugins -->
+         Js Plugins 
         <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery-ui.min.js"></script>
@@ -825,4 +823,4 @@
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/main.js"></script>
     </body>
-</html>
+</html>-->

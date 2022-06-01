@@ -18,13 +18,13 @@ public class Account {
     private String email;
     private String phone;
     private String address;
-    private boolean status;
     private String role;
+    private boolean status;
 
     public Account() {
     }
 
-    public Account(int accountID, String username, String password, String name, boolean gender, String email, String phone, String address, boolean status, String role) {
+    public Account(int accountID, String username, String password, String name, boolean gender, String email, String phone, String address, String role, boolean status) {
         this.accountID = accountID;
         this.username = username;
         this.password = password;
@@ -33,9 +33,11 @@ public class Account {
         this.email = email;
         this.phone = phone;
         this.address = address;
-        this.status = status;
         this.role = role;
+        this.status = status;
     }
+
+    
 
     public int getAccountID() {
         return accountID;

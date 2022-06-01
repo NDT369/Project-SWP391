@@ -59,7 +59,8 @@ public class ChangePassServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setAttribute("pageInclude", "changepass.jsp");
+        request.getRequestDispatcher("index.jsp").forward(request, response);
 
     }
 
@@ -78,24 +79,26 @@ public class ChangePassServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("account");
         String oldPass = request.getParameter("oldPass");
-        String newPass1 = request.getParameter("newPass1");
-        String newPass2 = request.getParameter("newPass2");
-        if (oldPass.equals(a.getPassword())) {
-            if (newPass1.equals(newPass2)) {
+        String newPass1 = request.getParameter("newPass");
+        String confirmPass = request.getParameter("confirmPass");
+        
+        Account a1 = dao.getAccountByUser(a.getUsername());
+        if (oldPass.equals(a1.getPassword())) {
+            if (newPass1.equals(confirmPass)) {
                 dao.changePass(a.getUsername(), newPass1);
 
-                request.setAttribute("changeSuccess", "Change password successfully");
-                request.setAttribute("pageInclude", "");
+                request.setAttribute("success", "Change password successfully");
+                request.setAttribute("pageInclude", "changepass.jsp");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             } else {
-                request.setAttribute("wrongNewPass", "re-enter new password is not match");
-                request.setAttribute("pageInclude", "");
+                request.setAttribute("error", "Password incorrect!");
+                request.setAttribute("pageInclude", "changepass.jsp");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
 
         } else {
-            request.setAttribute("wrongOldPass", "Old password is wrong!!");
-            request.setAttribute("pageInclude", "");
+            request.setAttribute("error", "Current password incorrect!!");
+            request.setAttribute("pageInclude", "changepass.jsp");
             request.getRequestDispatcher("index.jsp").forward(request, response);
 
         }

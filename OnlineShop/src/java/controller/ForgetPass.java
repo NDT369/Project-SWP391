@@ -17,9 +17,9 @@ import model.Account;
 
 /**
  *
- * @author DUC THINH
+ * @author MSI
  */
-public class LoginServlet extends HttpServlet {
+public class ForgetPass extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +38,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet ForgetPass</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ForgetPass at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,7 +59,8 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        request.setAttribute("pageInclude", "forgetpass.jsp");
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     /**
@@ -73,24 +74,25 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String userName = request.getParameter("username");
+        String email = request.getParameter("email");
 
-        AccountDAO ad = new AccountDAO();
-        Account account = ad.checkAccount(username, password);
-        if (account == null) {
-            request.setAttribute("mess", "Invalid Account");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+        AccountDAO dao = new AccountDAO();
+        Account a = dao.getAccountByEmailUsername(userName, email);
+        if (a != null) {
+            SendEmail sendEmail = new SendEmail();
+            String pass = sendEmail.getRandom();
+            sendEmail.sendResetPass(a.getEmail(), pass);
+            request.setAttribute("send", "Check your mail, login and change password");
+            request.setAttribute("pageInclude", "forgetpass.jsp");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+
         } else {
-            HttpSession session = request.getSession();
-            session.setAttribute("account", account);
-            if (account.getRole().equalsIgnoreCase("admin")) {
-                response.sendRedirect("admindashboard.jsp");
-            } else {
-                request.setAttribute("pageInclude", "homepage.jsp");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            }
+            request.setAttribute("error", "Username or Email incorrect!");
+            request.setAttribute("pageInclude", "forgetpass.jsp");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
+
     }
 
     /**
