@@ -3,16 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller-account;
 
+import static java.awt.Color.red;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
+import java.util.Properties;
+ 
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import model.Account;
@@ -32,10 +37,11 @@ public class SendEmail {
     
 
     //send email to the user email
-    public boolean sendResetPass(String toEmail, String pass) {
+    public boolean sendResetPass(Account a, String pass) {
 
         boolean test = false;
         
+        String toEmail = a.getEmail();
         String fromEmail = "phunguyen06072001@gmail.com";
         String password = "sgepfdmvyltodmvo";
         
@@ -79,7 +85,7 @@ public class SendEmail {
         });
 
         try {
-
+            
             /* Create an instance of MimeMessage, 
  	      it accept MIME types and headers 
              */
@@ -87,9 +93,21 @@ public class SendEmail {
             message.setFrom(new InternetAddress(fromEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
             message.setSubject("Request to reset password");
-            message.setText("This message is in response to your request to reset your account password.\n"
-                    + "Your password: " + pass);
-
+            message.setSentDate(new Date());
+//            message.setText("Hi "+a.getName()+",\n\n"
+//                    + "This message is in response to your request to reset your account password.\n\n"
+//                    + "Your password: <font color=red>" + pass +"</font>\n\n"
+//                    + "Thanks,\n"
+//                    + "Ngu team");
+            String mess = "Hi "+a.getName()+",<br><br>"
+                    + "This message is in response to your request to reset your account password.<br><br>"
+                    + "Your password: <font color=red>" + pass +"</font><br><br>"
+                    + "Login at this link: http://localhost:40180/OnlineShop/login <br>"
+                    + "Change Password at this link: http://localhost:40180/OnlineShop/changepass <br><br>"
+                    + "Thanks,<br>"
+                    + "<font color=blue>Ngu Si team</font>";
+            message.setContent(mess, "text/html");
+            
             /* Transport class is used to deliver the message to the recipients */
             Transport.send(message);
 
@@ -102,8 +120,8 @@ public class SendEmail {
         return test;
     }
     public static void main(String[] args) {
-        SendEmail send = new SendEmail();
-        System.out.println(send.sendResetPass("phundhe151425@fpt.edu.vn", "sdfasdf"));
+//        SendEmail send = new SendEmail();
+//        System.out.println(send.sendResetPass("phundhe151425@fpt.edu.vn", "sdfasdf"));
     }
     
 }

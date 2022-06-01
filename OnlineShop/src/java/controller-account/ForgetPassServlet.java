@@ -81,7 +81,7 @@ public class ForgetPassServlet extends HttpServlet {
         if (a != null) {
             SendEmail sendEmail = new SendEmail();
             String pass = sendEmail.getRandom();
-            sendEmail.sendResetPass(a.getEmail(), pass);
+            sendEmail.sendResetPass(a, pass);
             dao.changePass(userName, pass);
             request.setAttribute("send", "Check your mail, login and change password");
             request.setAttribute("pageInclude", "forgetpass.jsp");
