@@ -120,7 +120,13 @@ public class AuthorizationFilter implements Filter {
                 if (a.getRole().equalsIgnoreCase("admin")) {
                     chain.doFilter(request, response);
                 } else {
-                    httpResponse.sendRedirect("error.jsp");
+                    if (a.getRole().equalsIgnoreCase("customer")) {
+                        httpResponse.sendRedirect("homepage.jsp");
+                    } else if (a.getRole().equalsIgnoreCase("saler")) {
+                        httpResponse.sendRedirect("saledashboard");
+                    } else {
+                        httpResponse.sendRedirect("marketingdashboard");
+                    }
                 }
             }
         }
@@ -132,7 +138,13 @@ public class AuthorizationFilter implements Filter {
                 if (a.getRole().equalsIgnoreCase("saler")) {
                     chain.doFilter(request, response);
                 } else {
-                    httpResponse.sendRedirect("error.jsp");
+                    if (a.getRole().equalsIgnoreCase("customer")) {
+                        httpResponse.sendRedirect("homepage.jsp");
+                    } else if (a.getRole().equalsIgnoreCase("admin")) {
+                        httpResponse.sendRedirect("admindashboard");
+                    } else {
+                        httpResponse.sendRedirect("marketingdashboard");
+                    }
                 }
             }
         }
@@ -144,7 +156,13 @@ public class AuthorizationFilter implements Filter {
                 if (a.getRole().equalsIgnoreCase("marketer")) {
                     chain.doFilter(request, response);
                 } else {
-                    httpResponse.sendRedirect("error.jsp");
+                    if (a.getRole().equalsIgnoreCase("customer")) {
+                        httpResponse.sendRedirect("homepage.jsp");
+                    } else if (a.getRole().equalsIgnoreCase("admin")) {
+                        httpResponse.sendRedirect("admindashboard");
+                    } else {
+                        httpResponse.sendRedirect("saledashboard");
+                    }
                 }
             }
         }
