@@ -28,11 +28,17 @@ public class SendEmail {
         int number = rnd.nextInt(999999);
         return String.format("%06d", number);
     }
+    
+    
 
     //send email to the user email
     public boolean sendResetPass(String toEmail, String pass) {
 
         boolean test = false;
+        
+        String fromEmail = "phunguyen06072001@gmail.com";
+        String password = "sgepfdmvyltodmvo";
+        
         //create an instance of Properties Class   
         Properties prop = new Properties();
 
@@ -42,11 +48,16 @@ public class SendEmail {
            As shown here in the code. 
            Change accordingly, if your email id is not a gmail id
          */
-        prop.put("mail.smtp.host", "smtp.gmail.com");
-        //below mentioned mail.smtp.port is optional
-        prop.put("mail.smtp.port", "587");
+        
+//        prop.put("mail.smtp.host", "smtp.gmail.com");
+//        prop.put("mail.smtp.port", "587");
+//        prop.put("mail.smtp.auth", "true");
+//        prop.put("mail.smtp.starttls.enable", "true");
+        
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.starttls.enable", "true");
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "587");
         
 //        prop.setProperty("mail.smtp.host", "smtp.mail.com");
 //        prop.setProperty("mail.smtp.port", "587");
@@ -55,8 +66,7 @@ public class SendEmail {
 //        prop.put("mail.smtp.socketFactory.port", "587");
 //        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 
-        String fromEmail = "phunguyen06072001@gmail.com";
-        String password = "Phu06072001";
+        
         
         /* Pass Properties object(props) and Authenticator object   
            for authentication to Session instance 
@@ -75,7 +85,7 @@ public class SendEmail {
              */
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(fromEmail));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
             message.setSubject("Request to reset password");
             message.setText("This message is in response to your request to reset your account password.\n"
                     + "Your password: " + pass);
@@ -91,4 +101,9 @@ public class SendEmail {
 
         return test;
     }
+    public static void main(String[] args) {
+        SendEmail send = new SendEmail();
+        System.out.println(send.sendResetPass("phundhe151425@fpt.edu.vn", "sdfasdf"));
+    }
+    
 }
