@@ -55,8 +55,8 @@ public class SendEmail {
 //        prop.put("mail.smtp.socketFactory.port", "587");
 //        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 
-        String fromEmail = "phundhe151425@fpt.edu.vn";
-        String password = "0982060701";
+        String fromEmail = "phunguyen06072001@gmail.com";
+        String password = "Phu06072001";
         
         /* Pass Properties object(props) and Authenticator object   
            for authentication to Session instance 
