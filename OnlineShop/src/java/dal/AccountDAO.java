@@ -9,8 +9,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import model.Account;
+import model.Role;
 
 /**
  *
@@ -140,8 +143,8 @@ public class AccountDAO extends DBContext {
         }
         return list;
     }
-    
-    public List<Account> getByRole(int role){
+
+    public List<Account> getByRole(int role) {
         List<Account> list = new ArrayList<>();
         String sql = "select * from Account where Role_ID = ?";
         try {
@@ -155,7 +158,8 @@ public class AccountDAO extends DBContext {
         }
         return list;
     }
-    public List<Account> getByStatus(int status){
+
+    public List<Account> getByStatus(int status) {
         List<Account> list = new ArrayList<>();
         String sql = "select * from Account where Account_Status = ?";
         try {
@@ -169,20 +173,75 @@ public class AccountDAO extends DBContext {
         }
         return list;
     }
-    
 
-    public List<Account> getAllSort(String str) { // giang
+    public List<Account> getAllSort(String str, List<Account> l) { // giang
         List<Account> list = new ArrayList<>();
-        String sql = "select * from Account order by " + str;
-        try {
-            ps = connection.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Account(rs.getInt("Account_ID"), rs.getString("Username"), rs.getString("Password"), rs.getString("Name"), rs.getBoolean("Gender"),
-                        rs.getString("Email"), rs.getString("Phone"), rs.getString("Address"), rs.getBoolean("Account_Status"), rs.getString("Role_ID")));
+        Collections.sort(l, new Comparator<Account>() {
+            @Override
+            public int compare(Account o1, Account o2) {
+                if (str.equals("Account_ID")) {
+                    return o1.getAccountID() > o2.getAccountID() ? 1 : -1;
+                }
+                if (str.equals("Name")) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+                if (str.equals("Email")) {
+                    return o1.getEmail().compareTo(o2.getEmail());
+                }
+                if (str.equals("Phone")) {
+                    return o1.getPhone().compareTo(o2.getPhone());
+                }
+                if (str.equals("Role_ID")) {
+                    return o1.getRole().compareTo(o2.getRole());
+                }
+                return o1.getAccountID() > o2.getAccountID() ? 1 : -1;
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        });
+        return l;
+    }
+
+    public List<Account> fillter(String gender, String role, String status, List<Account> l) {
+        List<Account> list = new ArrayList<>();
+        if (gender.equals("") && role.equals("") && status.equals("")) {
+            return l;
+        }
+        if (gender != "") {
+            boolean g;
+            if (gender.equals("1")) {
+                g = true;
+            } else {
+                g = false;
+            }
+            for (Account account : l) {
+                if (account.isGender() == g) {
+                    list.add(account);
+                }
+            }
+        }
+        if (role != "") {
+            for (int i = list.size() - 1; i >= 0; i--) {
+                if (!list.get(i).getRole().equals(role)) {
+                    list.remove(list.get(i));
+                }
+            }
+
+        }
+        if (status != "") {
+            boolean s;
+            if (status.equals("1")) {
+                s = true;
+            } else {
+                s = false;
+            }
+            for (int i = list.size() - 1; i >= 0; i--) {
+                if (list.get(i).isStatus() != s) {
+                    list.remove(list.get(i));
+                }
+            }
+        }
+        Account x = null;
+        if (list.size() == 0) {
+            list.add(x);
         }
         return list;
     }
@@ -203,22 +262,9 @@ public class AccountDAO extends DBContext {
         return list;
     }
 
-//    public List<Integer> getAllGender() {
-//        List<Integer> list = new ArrayList<>();
-//        String sql = "select DISTINCT Gender from Account";
-//        try {
-//            ps = connection.prepareStatement(sql);
-//            rs = ps.executeQuery();
-//            while (rs.next()) {
-//                list.add(rs.getInt(1));
-//            }
-//        } catch (Exception e) {
-//        }
-//        return list;
-//    }
-    public List<Integer> getAllRole() {
+    public List<Integer> getAllGender() {
         List<Integer> list = new ArrayList<>();
-        String sql = "select DISTINCT Role_ID from Account";
+        String sql = "select DISTINCT Gender from Account";
         try {
             ps = connection.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -230,8 +276,41 @@ public class AccountDAO extends DBContext {
         return list;
     }
 
+    public List<Role> getAllRole() {
+        List<Role> list = new ArrayList<>();
+        String sql = "select * from Role_Account";
+        try {
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Role r = new Role();
+                r.setRoleID(rs.getInt(1));
+                r.setRoleName(rs.getString(2));
+                list.add(r);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+//    public List<Integer> getAllStatus() {
+//        List<Integer> list = new ArrayList<>();
+//        String sql = "select DISTINCT Account_Status from Account";
+//        try {
+//            ps = connection.prepareStatement(sql);
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                list.add(rs.getInt(1));
+//            }
+//        } catch (Exception e) {
+//        }
+//        return list;
+//    }
+
     public Account getAcountByID(int id) {
-        String sql = "select * from Account where Account_ID = ?";
+        String sql = "  select * from Account a\n"
+                + "  join Role_Account r  on a.Role_ID = r.Role_ID\n"
+                + "  where a.Account_ID = ?";
 
         try {
             ps = connection.prepareStatement(sql);
@@ -239,11 +318,30 @@ public class AccountDAO extends DBContext {
             rs = ps.executeQuery();
             if (rs.next()) {
                 return new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getBoolean(5),
-                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(10), rs.getString(9));
+                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(10), rs.getString(12));
             }
         } catch (Exception e) {
         }
         return null;
+    }
+
+    public void UpdateUserRole(String id, String role) {
+        String sql = "update Account set Role_ID = " + role +" where Account_ID = " + id ;
+        
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+    
+      public void UpdateUserStatus(String id, String status) {
+        String sql = "update Account set Account_Status = " + status +" where Account_ID = " + id ;        
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
     }
 
     public static void main(String[] args) {
@@ -268,9 +366,12 @@ public class AccountDAO extends DBContext {
 //        for (Account account : list) {
 //            System.out.println(account);
 //        }
-
-        Account acc = a.getAcountByID(4);
-        System.out.println(acc.toString());
+//        List<Integer> list = new ArrayList<>();
+//        list = a.getAllStatus();
+//    
+//        for (Integer i : list) {
+//            System.out.println(i);
+//        }
     }
 
 }
