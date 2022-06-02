@@ -8,7 +8,6 @@ package AdminController;
 import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +21,7 @@ import model.Role;
  *
  * @author Pham Minh Giang
  */
-public class UserDetailServlet extends HttpServlet {
+public class UserUpdateServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +40,10 @@ public class UserDetailServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserDetailServlet</title>");
+            out.println("<title>Servlet UserUpdateServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserDetailServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UserUpdateServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,40 +61,29 @@ public class UserDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = 0;
-
-            id = Integer.parseInt(request.getParameter("id"));
-            AccountDAO a = new AccountDAO();
-            Account ac = a.getAcountByID(id);
-            List<Role> listRole = a.getAllRole();
-            List<Integer> listStatus = new ArrayList();
-            listStatus.add(1);
-            listStatus.add(0);
-            
-            for (int i = 0; i < listRole.size(); i++) {
-                if(listRole.get(i).getRoleName().equalsIgnoreCase(ac.getRole())){
-                    listRole.remove(listRole.get(i));
-                }
-            }
-            int status;
-            if(ac.isStatus()){
-                status = 1;
-            }else{
-                status = 0;
-            }
-            for (int i = 0; i < listStatus.size(); i++) {
-                if(listStatus.get(i)==status){
-                    listStatus.remove(listStatus.get(i));
-                }
-            }
-
-            request.setAttribute("role", ac.getRole());
-            request.setAttribute("status", ac.isStatus());
-            request.setAttribute("RoleList", listRole);
-            request.setAttribute("StatusList", listStatus);
-            request.setAttribute("Account", ac);
-       
-        request.getRequestDispatcher("Admin/userdetail.jsp").forward(request, response);
+        String role_id = request.getParameter("role");
+        String status_raw = request.getParameter("status");
+        String id_raw = request.getParameter("id");
+        AccountDAO a = new AccountDAO();
+        if(status_raw != null){
+        a.UpdateUserStatus(id_raw,status_raw);
+        }
+        if(role_id!=null){
+            a.UpdateUserRole(id_raw, role_id);
+        }
+        
+        
+//        List<Account> listAccount = a.getAll();
+//        List<Integer> listGender = a.getAllGender();
+//        List<Role> listRole = a.getAllRole();
+//        List<Integer> listStatus = a.getAllStatus();
+ 
+//        request.setAttribute("GenderList", listGender);
+//        request.setAttribute("RoleList", listRole);
+//        request.setAttribute("StatusList", listStatus);
+//        request.setAttribute("UserList", listAccount);
+        
+        response.sendRedirect("userlist");
     }
 
     /**

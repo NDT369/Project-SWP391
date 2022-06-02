@@ -28,6 +28,22 @@
         <servlet-name>UserSearchServlet</servlet-name>
         <servlet-class>AdminController.UserSearchServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserUpdateServlet</servlet-name>
+        <servlet-class>AdminController.UserUpdateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>controller.HomeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductDetailsServlet</servlet-name>
+        <servlet-class>controller.ProductDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductServlet</servlet-name>
+        <servlet-class>controller.ProductServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -47,6 +63,22 @@
     <servlet-mapping>
         <servlet-name>UserSearchServlet</servlet-name>
         <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserUpdateServlet</servlet-name>
+        <url-pattern>/userupdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductDetailsServlet</servlet-name>
+        <url-pattern>/productdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductServlet</servlet-name>
+        <url-pattern>/product</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

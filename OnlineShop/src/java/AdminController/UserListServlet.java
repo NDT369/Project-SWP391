@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.Response;
 import model.Account;
+import model.Role;
 
 /**
  *
@@ -63,16 +65,33 @@ public class UserListServlet extends HttpServlet {
             throws ServletException, IOException {
 
         AccountDAO a = new AccountDAO();
-        List<Account> list = a.getAll();
+        List<Account> listAccount = a.getAll();
+        List<Integer> listGender = a.getAllGender();
+        List<Role> listRole = a.getAllRole();
+//        List<Integer> listStatus = a.getAllStatus();
 
-        int gender = 0, role = 0, status = 0;
-        List<Integer> l = new ArrayList<>();
-        l.add(role);
-        l.add(gender);
-        l.add(status);
-        request.setAttribute("int", l);
+        String gender = "";
+        String role = "";
+        String status = "";
+        if (request.getParameter("gender") != null) {
+            gender = request.getParameter("gender");
+        }
+        if (request.getParameter("role") != null) {
+            role = request.getParameter("role");
+        }
+        if (request.getParameter("status") != null) {
+            status = request.getParameter("status");
+        }
 
-        request.setAttribute("UserList", list);
+        request.setAttribute("gender", gender);
+        request.setAttribute("role", role);
+        request.setAttribute("status", status);
+
+        request.setAttribute("sort", "");
+        request.setAttribute("GenderList", listGender);
+        request.setAttribute("RoleList", listRole);
+//        request.setAttribute("StatusList", listStatus);
+        request.setAttribute("UserList", listAccount);
         request.getRequestDispatcher("Admin/userlist.jsp").forward(request, response);
     }
 
@@ -87,45 +106,50 @@ public class UserListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String gender_raw = request.getParameter("gender");
-        String role_raw = request.getParameter("role");
-        String status_raw = request.getParameter("status");
-        
-        int gender = 0, role = 0, status = 0;
-
         AccountDAO a = new AccountDAO();
-        List<Account> listall = a.getAll();
-//        try {
-//            gender = Integer.parseInt(gender_raw);
-//        } catch (Exception e) {
-//        }
-//        try {
-//            role = Integer.parseInt(role_raw);
-//        } catch (Exception e) {
-//        }
-//        try {
-//            status = Integer.parseInt(status_raw);
-//        } catch (Exception e) {
-//        }
-//        if (gender_raw != null) {
-//            List<Account> list = a.getByGender(gender);
-//            request.setAttribute("UserList", list);
-//            request.getRequestDispatcher("Admin/UserList.jsp").forward(request, response);
-//        }
-//        if (role_raw != null) {
-//            List<Account> list = a.getByRole(role);
-//            request.setAttribute("UserList", list);
-//            request.getRequestDispatcher("Admin/UserList.jsp").forward(request, response);
-//        }
-//        if (status_raw != null) {
-//            List<Account> list = a.getByStatus(status);
-//            request.setAttribute("UserList", list);
-//            request.getRequestDispatcher("Admin/UserList.jsp").forward(request, response);
-//        }
+        List<Account> list = a.getAll();
 
-        
-        request.setAttribute("UserList", listall);
+        String search = "";
+        search = request.getParameter("search");
+        if (!search.equals("")) {
+            for (int i = list.size() - 1; i >= 0; i--) {
+                if (!list.get(i).getName().toLowerCase().contains(search.toLowerCase())
+                        && !list.get(i).getEmail().toLowerCase().contains(search.toLowerCase())
+                        && !list.get(i).getPhone().toLowerCase().contains(search.toLowerCase())) {
+                    list.remove(list.get(i));
+                }
+            }
+        }
+
+        String gender = "";
+        String role = "";
+        String status = "";
+        if (request.getParameter("gender") != null && !request.getParameter("gender").equals("")) {
+            gender = request.getParameter("gender");
+
+        }
+        if (request.getParameter("role") != null && !request.getParameter("role").equals("")) {
+            role = request.getParameter("role");
+        }
+        if (request.getParameter("status") != null && !request.getParameter("status").equals("")) {
+            status = request.getParameter("status");
+        }
+
+        request.setAttribute("gender", gender);
+        request.setAttribute("role", role);
+        request.setAttribute("status", status);
+        request.setAttribute("search", search);
+
+        List<Account> listFilter = a.fillter(gender, role, status, list);
+
+        String sort_raw = "";
+        if (request.getParameter("sort") != null && !request.getParameter("sort").equals("")) {
+            sort_raw = request.getParameter("sort");
+        }
+
+        listFilter = a.getAllSort(sort_raw, listFilter);
+        request.setAttribute("sort", sort_raw);
+        request.setAttribute("UserList", listFilter);
         request.getRequestDispatcher("Admin/userlist.jsp").forward(request, response);
     }
 

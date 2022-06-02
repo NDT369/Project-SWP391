@@ -8,11 +8,13 @@ package AdminController;
 import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Account;
 
 /**
@@ -38,7 +40,7 @@ public class UserSearchServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserSearchServlet</title>");            
+            out.println("<title>Servlet UserSearchServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UserSearchServlet at " + request.getContextPath() + "</h1>");
@@ -77,10 +79,30 @@ public class UserSearchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String sort_raw = request.getParameter("sort");
-        AccountDAO a = new AccountDAO();
-        List<Account> list = a.getAllSort(sort_raw);
-        request.setAttribute("UserList", list);
+
+//        HttpSession session = request.getSession();
+//        List<String> list = new ArrayList<>();
+//        Object o = session.getAttribute("ListFillter");
+//        if (o != null) {
+//            list = (List<String>) o;
+//        } else {
+//            list = new ArrayList<>();
+//        }
+//
+//        String gender = "";
+//        String role = "";
+//        String status = "";
+//        gender = request.getParameter("gender");
+//        role = request.getParameter("role");
+//        status = request.getParameter("status");
+//
+//        request.setAttribute("gender", gender);
+//        request.setAttribute("role", role);
+//        request.setAttribute("status", status);
+
+//        AccountDAO a = new AccountDAO();
+//        List<Account> listFilter = a.fillter(gender, role, status);
+//        request.setAttribute("listFilter", listFilter);
         request.getRequestDispatcher("Admin/userlist.jsp").forward(request, response);
     }
 
