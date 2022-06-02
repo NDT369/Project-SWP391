@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller-account;
+package AccountController;
 
 import dal.AccountDAO;
 import java.io.IOException;
@@ -17,9 +17,9 @@ import model.Account;
 
 /**
  *
- * @author MSI
+ * @author DUC THINH
  */
-public class ChangePassServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +38,10 @@ public class ChangePassServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ChangePassServlet</title>");
+            out.println("<title>Servlet LoginServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ChangePassServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,9 +59,7 @@ public class ChangePassServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("pageInclude", "changepass.jsp");
-        request.getRequestDispatcher("index.jsp").forward(request, response);
-
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     /**
@@ -75,34 +73,24 @@ public class ChangePassServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountDAO dao = new AccountDAO();
-        HttpSession session = request.getSession();
-        Account a = (Account) session.getAttribute("account");
-        String oldPass = request.getParameter("oldPass");
-        String newPass1 = request.getParameter("newPass");
-        String confirmPass = request.getParameter("confirmPass");
-        
-        Account a1 = dao.getAccountByUser(a.getUsername());
-        if (oldPass.equals(a1.getPassword())) {
-            if (newPass1.equals(confirmPass)) {
-                dao.changePass(a.getUsername(), newPass1);
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-                request.setAttribute("success", "Change password successfully");
-                request.setAttribute("pageInclude", "changepass.jsp");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+        AccountDAO ad = new AccountDAO();
+        Account account = ad.checkAccount(username, password);
+        if (account == null) {
+            request.setAttribute("mess", "Invalid Account");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        } else {
+            HttpSession session = request.getSession();
+            session.setAttribute("account", account);
+            if (account.getRole().equalsIgnoreCase("admin")) {
+                response.sendRedirect("admindashboard.jsp");
             } else {
-                request.setAttribute("error", "Password incorrect!");
-                request.setAttribute("pageInclude", "changepass.jsp");
+                request.setAttribute("pageInclude", "homepage.jsp");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
-
-        } else {
-            request.setAttribute("error", "Current password incorrect!!");
-            request.setAttribute("pageInclude", "changepass.jsp");
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-
         }
-
     }
 
     /**

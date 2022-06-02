@@ -31,7 +31,7 @@
                 <div class="login-form">
                     <h2>Forget Password</h2>
                     <p>Enter username, email and we'll send you a new password to get back into your account.</p>
-                    <form action="forgetpass" method="POST">
+                    <form action="resetpass" method="POST">
                         <div class="group-input">
                             <!--<label for="username">Username *</label>-->
                             <input type="text" id="username" name="username" placeholder="Username">

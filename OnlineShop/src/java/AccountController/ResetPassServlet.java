@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package AccountController;
 
 import dal.AccountDAO;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import model.Account;
  *
  * @author MSI
  */
-public class ForgetPassServlet extends HttpServlet {
+public class ResetPassServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -58,7 +58,7 @@ public class ForgetPassServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("pageInclude", "forgetpass.jsp");
+        request.setAttribute("pageInclude", "resetpass.jsp");
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
@@ -84,12 +84,12 @@ public class ForgetPassServlet extends HttpServlet {
             sendEmail.sendResetPass(a, pass);
             dao.changePass(userName, pass);
             request.setAttribute("send", "Check your mail, login and change password");
-            request.setAttribute("pageInclude", "forgetpass.jsp");
+            request.setAttribute("pageInclude", "resetpass.jsp");
             request.getRequestDispatcher("index.jsp").forward(request, response);
 
         } else {
             request.setAttribute("error", "Username or Email incorrect!");
-            request.setAttribute("pageInclude", "forgetpass.jsp");
+            request.setAttribute("pageInclude", "resetpass.jsp");
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
     }

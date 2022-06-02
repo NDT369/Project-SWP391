@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller-account;
+package AccountController;
 
 import static java.awt.Color.red;
 import java.util.Date;
@@ -99,9 +99,9 @@ public class SendEmail {
 //                    + "Your password: <font color=red>" + pass +"</font>\n\n"
 //                    + "Thanks,\n"
 //                    + "Ngu team");
-            String mess = "Hi "+a.getName()+",<br><br>"
+            String mess = "Hi <b>"+a.getName()+"</b>,<br><br>"
                     + "This message is in response to your request to reset your account password.<br><br>"
-                    + "Your password: <font color=red>" + pass +"</font><br><br>"
+                    + "Your password: <b><font color=green>" + pass +"</font></b><br><br>"
                     + "Login at this link: http://localhost:40180/OnlineShop/login <br>"
                     + "Change Password at this link: http://localhost:40180/OnlineShop/changepass <br><br>"
                     + "Thanks,<br>"

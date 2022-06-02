@@ -10,15 +10,15 @@
     </filter-mapping>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>controller.LoginServlet</servlet-class>
+        <servlet-class>AccountController.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ChangePassServlet</servlet-name>
-        <servlet-class>controller.ChangePassServlet</servlet-class>
+        <servlet-class>AccountController.ChangePassServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ForgetPassServlet</servlet-name>
-        <servlet-class>controller.ForgetPassServlet</servlet-class>
+        <servlet-name>ResetPassServlet</servlet-name>
+        <servlet-class>AccountController.ResetPassServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -29,8 +29,8 @@
         <url-pattern>/changepass</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ForgetPassServlet</servlet-name>
-        <url-pattern>/forgetpass</url-pattern>
+        <servlet-name>ResetPassServlet</servlet-name>
+        <url-pattern>/resetpass</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
