@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Account;
 
 /**
@@ -72,6 +73,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String fullname = request.getParameter("fullname");
         String gender_raw = request.getParameter("gender");
         String email = request.getParameter("email");
@@ -90,7 +92,6 @@ public class RegisterServlet extends HttpServlet {
         } else {
             gender = false;
         }
-        
 
         if (a != null) {
             mess = "UserName already exist!";
@@ -107,6 +108,10 @@ public class RegisterServlet extends HttpServlet {
                     request.setAttribute("mess", mess);
                     request.getRequestDispatcher("register.jsp").forward(request, response);
                 } else {
+                    SendMailRegister sendEmail = new SendMailRegister();
+                    int numberOfCharactor = 8;
+                    String code = sendEmail.randomAlphaNumeric(numberOfCharactor);
+
                     Account newAcc = new Account();
                     newAcc.setName(fullname);
                     newAcc.setGender(gender);
@@ -115,7 +120,29 @@ public class RegisterServlet extends HttpServlet {
                     newAcc.setAddress(address);
                     newAcc.setUsername(username);
                     newAcc.setPassword(password);
-                    ad.registerNewAcc(newAcc);
+                    session.setAttribute("code", code);
+                    session.setAttribute("tempacc", newAcc);
+                    
+                    String subject = "Authenticate gmail";
+                    String message = "<!DOCTYPE html>\n"
+                            + "<html lang=\"en\">\n"
+                            + "\n"
+                            + "<head>\n"
+                            + "</head>\n"
+                            + "\n"
+                            + "<body>\n"
+                            + "    <h3 style=\"color: blue;\">Thank you for registering and participating in our program.</h3>\n"
+                            + "    <div>For your and our safety, we want you to make sure that the email you use to sign up is authenticated.</div>\n"
+                            + "    <div>Enter the code below to authenticate.</div><br/>\n"
+                            + "    <div>Code: " + code + "</div>\n"
+                            + "    <h3 style=\"color: blue;\">Thank you very much!</h3>\n"
+                            + "\n"
+                            + "</body>\n"
+                            + "\n"
+                            + "</html>";
+                    SendMailRegister.send(email, subject, message, sendEmail.getUser(), sendEmail.getPass());
+                    response.sendRedirect("verificationemail");
+                    
                 }
             }
         }

@@ -217,6 +217,9 @@
                 <div class="col-lg-6 offset-lg-3">
                     <div class="login-form">
                         <h2>Login</h2>
+                        <c:if test="${requestScope.mess!=null}">
+                        <h3 style="color: red">${requestScope.mess}</h3>
+                        </c:if>
                         <form action="login" method="post">
                             <div class="group-input">
                                 <label for="username">Username or email address *</label>
