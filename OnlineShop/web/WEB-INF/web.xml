@@ -29,6 +29,7 @@
         <servlet-class>AdminController.UserSearchServlet</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< HEAD
         <servlet-name>AdminDashBoardServlet</servlet-name>
         <servlet-class>AdminController.AdminDashBoardServlet</servlet-class>
     </servlet>
@@ -51,6 +52,22 @@
     <servlet>
         <servlet-name>VerificationEmail</servlet-name>
         <servlet-class>controller.VerificationEmail</servlet-class>
+=======
+        <servlet-name>UserUpdateServlet</servlet-name>
+        <servlet-class>AdminController.UserUpdateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>controller.HomeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductDetailsServlet</servlet-name>
+        <servlet-class>controller.ProductDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductServlet</servlet-name>
+        <servlet-class>controller.ProductServlet</servlet-class>
+>>>>>>> UserList,-UserDetails
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -73,6 +90,7 @@
         <url-pattern>/search</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< HEAD
         <servlet-name>AdminDashBoardServlet</servlet-name>
         <url-pattern>/admindashboard</url-pattern>
     </servlet-mapping>
@@ -95,6 +113,22 @@
     <servlet-mapping>
         <servlet-name>VerificationEmail</servlet-name>
         <url-pattern>/verificationemail</url-pattern>
+=======
+        <servlet-name>UserUpdateServlet</servlet-name>
+        <url-pattern>/userupdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductDetailsServlet</servlet-name>
+        <url-pattern>/productdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductServlet</servlet-name>
+        <url-pattern>/product</url-pattern>
+>>>>>>> UserList,-UserDetails
     </servlet-mapping>
     <session-config>
         <session-timeout>
